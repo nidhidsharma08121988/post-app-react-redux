@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchPosts } from "../redux-store/actions/postActions";
 
 const Posts = (props) => {
+  // more close to component did mount
+  useLayoutEffect(() => {
+    props.fetchPosts();
+  });
+  // more close to compoenent will receive props (note the props.new_post dependency)
   useEffect(() => {
-    if (props.posts === []) props.fetchPosts();
     if (props.new_post !== {}) props.posts.unshift(props.new_post);
     //eslint-disable-next-line
   }, [props.new_post]);
